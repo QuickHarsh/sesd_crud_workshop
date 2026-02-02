@@ -7,7 +7,6 @@ const port = parseInt(process.env.PORT || '8080');
 
 import { ProductController } from './controllers/product.controller';
 
-// Controllers will be imported and passed here
 const controllers: any[] = [
     new ProductController(),
 ];

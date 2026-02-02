@@ -1,16 +1,8 @@
-/**
- * usage: npx ts-node src/scripts/demo.ts
- * 
- * This script demonstrates the full CRUD lifecycle of the Product API.
- * Ensure your server is running on port 8080 before running this script.
- */
-
 async function demo() {
     const API_URL = 'http://localhost:8080/api/products';
 
     console.log('🚀 Starting API Demo...\n');
 
-    // 1. Create a Product
     console.log('1️⃣  Creating a new product...');
     const newProduct = {
         name: 'Gaming Laptop',
@@ -36,7 +28,6 @@ async function demo() {
     const productId = createData.data._id;
     console.log('✅ Product Created! ID:', productId, '\n');
 
-    // 2. Get All Products (with specific search)
     console.log('2️⃣  Listing products (Searching for "Gaming")...');
     const listRes = await fetch(`${API_URL}?search=Gaming`);
     const listData = await listRes.json();
@@ -44,19 +35,17 @@ async function demo() {
     console.log(`Found ${listData.total} products.`);
     console.log('First match:', listData.products[0].name, '\n');
 
-    // 3. Update the Product
     console.log('3️⃣  Updating the product price...');
     const updateRes = await fetch(`${API_URL}/${productId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ price: 2199.99 }) // Price drop!
+        body: JSON.stringify({ price: 2199.99 })
     });
     const updateData = await updateRes.json();
     console.log('Status:', updateRes.status);
     console.log('New Price:', updateData.data.price);
     console.log('✅ Product Updated!\n');
 
-    // 4. Delete the Product
     console.log('4️⃣  Deleting the product...');
     const deleteRes = await fetch(`${API_URL}/${productId}`, {
         method: 'DELETE'

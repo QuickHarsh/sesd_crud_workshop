@@ -25,7 +25,6 @@ class App {
     }
 
     private initializeControllers(controllers: any[]): void {
-        // Basic route for health check
         this.app.get('/', (req, res) => {
             res.send('API is running...');
         });
