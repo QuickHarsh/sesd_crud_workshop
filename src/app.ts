@@ -6,13 +6,13 @@ class App {
     public app: Application;
     public port: number;
 
-    constructor(controllers: any[], port: number) {
+    constructor(routes: any[], port: number) {
         this.app = express();
         this.port = port;
 
         this.connectRelationalDatabase();
         this.initializeMiddlewares();
-        this.initializeControllers(controllers);
+        this.initializeRoutes(routes);
     }
 
     private connectRelationalDatabase(): void {
@@ -24,13 +24,13 @@ class App {
         this.app.use(express.urlencoded({ extended: true }));
     }
 
-    private initializeControllers(controllers: any[]): void {
+    private initializeRoutes(routes: any[]): void {
         this.app.get('/', (req, res) => {
             res.send('API is running...');
         });
 
-        controllers.forEach((controller) => {
-            this.app.use('/api', controller.router);
+        routes.forEach((route) => {
+            this.app.use('/api', route.router);
         });
 
         this.app.use(errorMiddleware);

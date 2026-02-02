@@ -1,27 +1,14 @@
-import { Request, Response, Router } from 'express';
+import { Request, Response } from 'express';
 import { ProductService } from '../services/product.service';
-import { validate } from '../middlewares/validation.middleware';
-import { createProductSchema, updateProductSchema } from '../schemas/product.schema';
 
 export class ProductController {
-    public router: Router;
     private productService: ProductService;
 
     constructor() {
-        this.router = Router();
         this.productService = new ProductService();
-        this.initializeRoutes();
     }
 
-    private initializeRoutes() {
-        this.router.post('/products', validate(createProductSchema), this.createProduct);
-        this.router.get('/products', this.getAllProducts);
-        this.router.get('/products/:id', this.getProductById);
-        this.router.put('/products/:id', validate(updateProductSchema), this.updateProduct);
-        this.router.delete('/products/:id', this.deleteProduct);
-    }
-
-    private createProduct = async (req: Request, res: Response): Promise<void> => {
+    public createProduct = async (req: Request, res: Response): Promise<void> => {
         try {
             const product = await this.productService.createProduct(req.body);
             res.status(201).json({ success: true, data: product });
@@ -30,7 +17,7 @@ export class ProductController {
         }
     };
 
-    private getAllProducts = async (req: Request, res: Response): Promise<void> => {
+    public getAllProducts = async (req: Request, res: Response): Promise<void> => {
         try {
             const page = parseInt(req.query.page as string) || 1;
             const limit = parseInt(req.query.limit as string) || 10;
@@ -38,7 +25,6 @@ export class ProductController {
             const sortBy = (req.query.sortBy as string) || 'createdAt';
             const sortOrder = (req.query.sortOrder as 'asc' | 'desc') || 'desc';
 
-            // Example filter: ?category=Electronics
             const filters: any = {};
             if (req.query.category) filters.category = req.query.category;
             if (req.query.minPrice) filters.price = { ...filters.price, $gte: Number(req.query.minPrice) };
@@ -51,7 +37,7 @@ export class ProductController {
         }
     };
 
-    private getProductById = async (req: Request, res: Response): Promise<void> => {
+    public getProductById = async (req: Request, res: Response): Promise<void> => {
         try {
             const product = await this.productService.getProductById(req.params.id);
             if (!product) {
@@ -64,7 +50,7 @@ export class ProductController {
         }
     };
 
-    private updateProduct = async (req: Request, res: Response): Promise<void> => {
+    public updateProduct = async (req: Request, res: Response): Promise<void> => {
         try {
             const product = await this.productService.updateProduct(req.params.id, req.body);
             if (!product) {
@@ -77,7 +63,7 @@ export class ProductController {
         }
     };
 
-    private deleteProduct = async (req: Request, res: Response): Promise<void> => {
+    public deleteProduct = async (req: Request, res: Response): Promise<void> => {
         try {
             const product = await this.productService.deleteProduct(req.params.id);
             if (!product) {

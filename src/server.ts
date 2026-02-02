@@ -5,12 +5,12 @@ dotenv.config();
 
 const port = parseInt(process.env.PORT || '8080');
 
-import { ProductController } from './controllers/product.controller';
+import { ProductRoute } from './routes/product.route';
 
-const controllers: any[] = [
-    new ProductController(),
+const routes: any[] = [
+    new ProductRoute(),
 ];
 
-const app = new App(controllers, port);
+const app = new App(routes, port);
 
 app.listen();
