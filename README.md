@@ -39,6 +39,19 @@ This is a full-fledged CRUD backend for a **Product Management System**, built u
    - Build: `npm run build`
    - Start: `npm start`
 
+## 🧪 How to Test
+We have included a demo script to verify the API functionality (Create -> List -> Update -> Delete).
+
+1. **Start the server** in one terminal:
+   ```bash
+   npm run dev
+   ```
+2. **Run the demo script** in another terminal:
+   ```bash
+   npx ts-node src/scripts/demo.ts
+   ```
+   You should see logs indicating successful creation, listing, updating, and deletion of a product.
+
 ## API Endpoints
 
 ### Products
