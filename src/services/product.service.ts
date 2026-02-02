@@ -22,7 +22,6 @@ export class ProductService {
     ): Promise<{ products: IProduct[]; total: number; page: number; totalPages: number }> {
         const skip = (page - 1) * limit;
 
-        // Build query
         const query: any = { ...filters };
         if (search) {
             query.$or = [

@@ -5,6 +5,4 @@ export class ProductRepository extends BaseRepository<IProduct> {
     constructor() {
         super(ProductModel);
     }
-
-    // Add specific product queries here if needed
 }
